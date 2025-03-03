@@ -7,9 +7,12 @@ from dotenv import load_dotenv
 
 # Load API Key from .env file
 load_dotenv()
-#OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+# OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+# OPENAI_BASE_URL = os.getenv("OPENAI_BASE_URL")
 OPENAI_API_KEY = st.secrets["OPENAI_API_KEY"]
+OPENAI_BASE_URL = st.secrets["OPENAI_BASE_URL"]
 openai.api_key = OPENAI_API_KEY
+openai.api_base = OPENAI_BASE_URL
 
 # Function to extract text from an uploaded PDF
 def extract_text_from_pdf(pdf_file):
@@ -37,7 +40,7 @@ def analyze_cv_vs_jd(cv_text, jd_text):
     """
     
     response = openai.chat.completions.create(
-        model="gpt-4",
+        model="gpt-4o",
         messages=[{"role": "system", "content": "You are an expert AI HR assistant."},
                   {"role": "user", "content": prompt}]
     )
@@ -56,7 +59,7 @@ def generate_interview_questions(jd_text, cv_text):
     """
     
     response = openai.chat.completions.create(
-        model="gpt-4",
+        model="gpt-4o",
         messages=[{"role": "system", "content": "You are an expert interviewer generating insightful questions."},
                   {"role": "user", "content": prompt}]
     )
